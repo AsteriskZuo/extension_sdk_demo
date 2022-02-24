@@ -10,13 +10,37 @@ cmake_minimum_required(VERSION 3.10.2)
 
 project("extension_sdk_demo")
 
+# Searches for a specified prebuilt library and stores the path as a
+# variable. Because CMake includes system libraries in the search path by
+# default, you only need to specify the name of the public NDK library
+# you want to add. CMake verifies that the library exists before
+# completing its build.
+
+find_library( # Sets the name of the path variable.
+        log-lib
+
+        # Specifies the name of the NDK library that
+        # you want CMake to locate.
+        log )
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
+add_library(
+        jni_helper
+        jni/jni_helper.cpp
+)
+target_include_directories(jni_helper PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/jni)
+target_link_libraries(
+        jni_helper
+        ${log-lib}
+)
+
 include(jni1/extension_sdk_demo_jni_1.cmake)
 include(jni2/extension_sdk_demo_jni_2.cmake)
+include(wrapper/extension_sdk_demo_wrapper.cmake)
 
 add_library( # Sets the name of the library.
              extension_sdk_demo
@@ -26,19 +50,6 @@ add_library( # Sets the name of the library.
 
              # Provides a relative path to your source file(s).
              extension_sdk_demo.cpp )
-
-# Searches for a specified prebuilt library and stores the path as a
-# variable. Because CMake includes system libraries in the search path by
-# default, you only need to specify the name of the public NDK library
-# you want to add. CMake verifies that the library exists before
-# completing its build.
-
-find_library( # Sets the name of the path variable.
-              log-lib
-
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              log )
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
