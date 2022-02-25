@@ -14,19 +14,24 @@
 class extension_sdk_demo_jni_2_api final {
 public:
     static extension_sdk_demo_jni_2_api instance;
-    static extension_sdk_demo_jni_2_api* getInstance() {
+
+    static extension_sdk_demo_jni_2_api *getInstance() {
         return &instance;
     }
+
 public:
- void adapterNativeInit(std::shared_ptr<ExtensionSdkDemoAdapterJNIListener2> listener1);
+    extension_sdk_demo_jni_2_api();
+    virtual ~extension_sdk_demo_jni_2_api();
 
- void adapterNativeHello();
+    void adapterNativeInit(std::shared_ptr<ExtensionSdkDemoAdapterJNIListener2> listener1);
 
- void adapterNativeSendMessage(int number, std::string string);
+    void adapterNativeHello();
 
- void adapterNativeSendMessageWithJson(int number, std::string json);
+    void adapterNativeSendMessage(int number, std::string string);
 
- void adapterNativeSendMessageWithPB(int number, std::string bytes);
+    void adapterNativeSendMessageWithJson(int number, std::string json);
+
+    void adapterNativeSendMessageWithPB(int number, std::string bytes);
 
     void adapterNativeHelloEcho();
 

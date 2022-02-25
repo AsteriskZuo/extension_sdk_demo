@@ -17,7 +17,7 @@ public:
         return &_instance;
     }
 public:
-    void cpp_wrapper_init(const std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> listener1);
+    void cpp_wrapper_init( std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> listener1);
 
     void cpp_wrapper_hello();
 

@@ -38,12 +38,16 @@ public class ExtensionSdkDemoAdapter1 {
         asyncThreadExec(() -> {
             result.success(Boolean.valueOf(true));
 //            ExtensionSdkDemoCallback1.getInstance().callbackJavaHello();//TODO:
+            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeHello();
         });
     }
 
     public void adapterJavaSendMessage(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         Log.i(TAG, "adapterJavaSendMessage");
         result.success(Boolean.valueOf(true));
+        Object number = call.argument("number");
+        Object string = call.argument("string");
+        ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessage(1, string.toString()); // todo:
     }
 
     public void adapterJavaSendMessageWithJson(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
@@ -65,10 +69,15 @@ public class ExtensionSdkDemoAdapter1 {
         uiThreadHandler.post(runnable);
     }
 
+    public ExtensionSdkDemoCallback1 getCallback1() {
+        return this.callback1;
+    }
+
     private static String TAG = "ExtensionSdkDemoAdapter1";
     private final ExecutorService asyncThreadPool = Executors.newCachedThreadPool();
     private final Handler uiThreadHandler = new Handler(Looper.getMainLooper());
     private MethodChannel channel;
+    private ExtensionSdkDemoCallback1 callback1;
 }
 
 class ExtensionSdkDemoCallback1 {

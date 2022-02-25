@@ -6,9 +6,12 @@
 #include "extension_sdk_demo_jni_2_listener.h"
 #include "extension_sdk_demo_jni_2_api.h"
 
+#include <memory>
+
 class ExtensionSdkDemoAdapterJNIListener2Impl : public ExtensionSdkDemoAdapterJNIListener2 {
 public:
-    virtual ~ExtensionSdkDemoAdapterJNIListener2Impl(std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> listener): _listener(listener) {}
+    ExtensionSdkDemoAdapterJNIListener2Impl(std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> listener): _listener(listener) {}
+    virtual ~ExtensionSdkDemoAdapterJNIListener2Impl() {}
     void adapterNativeHelloEcho() override {
         _listener->adapterNativeHelloEcho();
     }
@@ -30,8 +33,9 @@ private:
     std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> _listener;
 };
 
-void extension_sdk_demo_cpp_wrapper::cpp_wrapper_init(const std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> listener1) {
-    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeInit(std::make_shared<ExtensionSdkDemoAdapterJNIListener2Impl>());
+void extension_sdk_demo_cpp_wrapper::cpp_wrapper_init( std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> listener1) {
+    std::shared_ptr<ExtensionSdkDemoAdapterJNIListener2> s = std::make_shared<ExtensionSdkDemoAdapterJNIListener2Impl>(listener1);
+    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeInit(s);
 }
 
 void extension_sdk_demo_cpp_wrapper::cpp_wrapper_hello() {

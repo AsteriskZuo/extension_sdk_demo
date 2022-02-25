@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include "extension_sdk_demo_jni_listener_1.h"
+#include "extension_sdk_demo_cpp_wrapper.h"
 /* Header for class com_example_extension_sdk_demo_ExtensionSdkDemoAdapterJNI1 */
 
 #ifndef _Included_com_example_extension_sdk_demo_ExtensionSdkDemoAdapterJNI1
@@ -21,8 +22,8 @@ extern "C" {
  */
 JNIEXPORT void JNICALL
 Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNI1_adapterNativeHello
-        (JNIEnv *, jobject) {
-
+        (JNIEnv *env, jobject listener) {
+    extension_sdk_demo_cpp_wrapper::getInstance()->cpp_wrapper_hello();
 }
 
 /*
@@ -35,6 +36,7 @@ Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNI1_adapterNativeS
         (JNIEnv *env, jobject, jint number, jstring string) {
     const char *cstrString = (string ? env->GetStringUTFChars(string, 0) : nullptr);
     std::string cppString = std::string(cstrString);
+    extension_sdk_demo_cpp_wrapper::getInstance()->cpp_wrapper_send_message(number, cstrString);
     if (string) env->ReleaseStringUTFChars(string, cstrString);
     env->DeleteLocalRef(string);
 }
@@ -49,6 +51,7 @@ Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNI1_adapterNativeS
         (JNIEnv *env, jobject, jint number, jstring json) {
     const char *cstrJson = (json ? env->GetStringUTFChars(json, 0) : nullptr);
     std::string cppJson = std::string(cstrJson);
+    extension_sdk_demo_cpp_wrapper::getInstance()->cpp_wrapper_send_message(number, cstrJson);
     if (json) env->ReleaseStringUTFChars(json, cstrJson);
     env->DeleteLocalRef(json);
 }
@@ -72,6 +75,7 @@ Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNI1_adapterNativeI
     jobject listenerRef = env->NewGlobalRef(listener);
     std::shared_ptr<ExtensionSdkDemoAdapterJNIListener1> cpp_listener = std::make_shared<ExtensionSdkDemoAdapterJNIListener1>(
             listenerRef);
+    extension_sdk_demo_cpp_wrapper::getInstance()->cpp_wrapper_init(std::make_shared<ExtensionSdkDemoAdapterJNIListener1>(listenerRef));
 }
 
 #ifdef __cplusplus

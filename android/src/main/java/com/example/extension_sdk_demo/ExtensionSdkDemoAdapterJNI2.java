@@ -15,27 +15,33 @@ public class ExtensionSdkDemoAdapterJNI2 {
     public void adapterNativeInit(ExtensionSdkDemoAdapterJNIListener2 listener2) {
         Log.i(TAG, "adapterNativeInit");
         // todo: 调用原生接口
+        this.listener2 = listener2;// 假设已经从原生SDK返回
     }
 
     public void adapterNativeHello() {
         Log.i(TAG, "adapterNativeHello");
         // todo: 调用原生接口
+        listener2.nativeHelloEcho();// 假设已经从原生SDK返回
     }
 
-    public void adapterNativeSendMessage(int number, String string){
+    public void adapterNativeSendMessage(int number, String string) {
         Log.i(TAG, "adapterNativeSendMessage");
         // todo: 调用原生接口
+        listener2.nativeSendMessageEcho(number, string);
     }
 
     public void adapterNativeSendMessageWithJson(int number, String json) {
         Log.i(TAG, "adapterNativeSendMessageWithJson");
         // todo: 调用原生接口
+        listener2.adapterNativeSendMessageWithJsonEcho(number, json);
     }
 
     public void adapterNativeSendMessageWithPB(int number, byte[] bytes) {
         Log.i(TAG, "adapterNativeSendMessageWithPB");
         // todo: 调用原生接口
+        listener2.adapterNativeSendMessageWithPBEcho(number, bytes);
     }
 
     private static String TAG = "ExtensionSdkDemoAdapterJNI2";
+    private ExtensionSdkDemoAdapterJNIListener2 listener2;
 }

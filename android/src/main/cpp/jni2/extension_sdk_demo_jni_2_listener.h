@@ -11,7 +11,6 @@
 // 通过继承原生SDK的接口获取通知，
 class ExtensionSdkDemoAdapterJNIListener2 {
 public:
-    virtual ~ExtensionSdkDemoAdapterJNIListener2() {}
     virtual void adapterNativeHelloEcho() = 0;
 
     virtual void adapterNativeSendMessageEcho(int number, std::string string) = 0;

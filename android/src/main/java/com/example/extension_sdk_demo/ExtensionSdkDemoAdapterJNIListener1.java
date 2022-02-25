@@ -6,18 +6,22 @@ import android.util.Log;
 public class ExtensionSdkDemoAdapterJNIListener1 {
     public void adapterNativeHelloEcho() {
         Log.i(TAG, "adapterNativeHelloEcho");
+        ExtensionSdkDemoAdapter1.getInstance().getCallback1().callbackJavaHello();
     }
 
     public void adapterNativeSendMessageEcho(int number, String string) {
         Log.i(TAG, "adapterNativeSendMessageEcho");
+        ExtensionSdkDemoAdapter1.getInstance().getCallback1().callbackJavaSendMessage(number, string);
     }
 
     public void adapterNativeSendMessageWithJsonEcho(int number, String json) {
         Log.i(TAG, "adapterNativeSendMessageWithJsonEcho");
+        ExtensionSdkDemoAdapter1.getInstance().getCallback1().callbackJavaSendMessageWithJson(number, json);
     }
 
     public void adapterNativeSendMessageWithPBEcho(int number, byte[] bytes) {
         Log.i(TAG, "adapterNativeSendMessageWithPBEcho");
+        ExtensionSdkDemoAdapter1.getInstance().getCallback1().callbackJavaSendMessageWithPB(number, bytes);
     }
 
     private static String TAG = "ExtensionSdkDemoAdapterJNIListener1";

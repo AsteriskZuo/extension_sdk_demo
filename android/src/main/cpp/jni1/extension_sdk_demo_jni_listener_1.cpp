@@ -18,14 +18,14 @@ ExtensionSdkDemoAdapterJNIListener1::ExtensionSdkDemoAdapterJNIListener1(jobject
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
         return;
-    jclass jclsAppConnectStatusListener = env->FindClass(
+    jclass jclsAppListener = env->FindClass(
             "com/example/extension_sdk_demo/ExtensionSdkDemoAdapterJNIListener1");
-    if (env->ExceptionCheck() && 0 == jclsAppConnectStatusListener) {
+    if (env->ExceptionCheck() && 0 == jclsAppListener) {
         env->Throw(env->ExceptionOccurred());
     }
-    jclsGAppListener = (jclass) env->NewGlobalRef(jclsAppConnectStatusListener);
-    env->DeleteLocalRef(jclsAppConnectStatusListener);
-    jclsAppConnectStatusListener = 0;
+    jclsGAppListener = (jclass) env->NewGlobalRef(jclsAppListener);
+    env->DeleteLocalRef(jclsAppListener);
+    jclsAppListener = 0;
     jclsGAppListener_adapterNativeHelloEcho = env->GetMethodID(jclsGAppListener,
                                                                "adapterNativeHelloEcho", "()V");
     jclsGAppListener_adapterNativeSendMessageEcho = env->GetMethodID(jclsGAppListener,

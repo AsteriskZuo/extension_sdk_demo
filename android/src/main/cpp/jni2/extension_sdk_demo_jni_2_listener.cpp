@@ -15,13 +15,21 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNIListener2_nativeSendMessageEcho(
         JNIEnv *env, jobject thiz, jint number, jstring string) {
-    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeHelloEcho();
+    const char *cstrString = (string ? env->GetStringUTFChars(string, 0) : nullptr);
+    std::string cppString = std::string(cstrString);
+    if (string) env->ReleaseStringUTFChars(string, cstrString);
+    env->DeleteLocalRef(string);
+    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeSendMessageEcho(number, cppString);
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNIListener2_nativeSendMessageWithJsonEcho(
         JNIEnv *env, jobject thiz, jint number, jstring json) {
-    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeHelloEcho();
+    const char *cstrString = (json ? env->GetStringUTFChars(json, 0) : nullptr);
+    std::string cppString = std::string(cstrString);
+    if (json) env->ReleaseStringUTFChars(json, cstrString);
+    env->DeleteLocalRef(json);
+    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeSendMessageEcho(number, cppString);
 }
 extern "C"
 JNIEXPORT void JNICALL
