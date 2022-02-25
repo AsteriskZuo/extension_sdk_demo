@@ -15,3 +15,5 @@ samples, guidance on mobile development, and a full API reference.
 
 
 ## demo的流程介绍
+
+[详细介绍](./docs/design.md)
