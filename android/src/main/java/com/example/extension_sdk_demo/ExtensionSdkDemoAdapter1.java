@@ -33,12 +33,27 @@ public class ExtensionSdkDemoAdapter1 {
         return SingleHolder.instance;
     }
 
+    public void setListener() {
+        Log.i(TAG, "setListener");
+        asyncThreadExec(() -> {
+            if (1 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapterJNI1.getInstance().setListener(new ExtensionSdkDemoCallback1());
+            } else if (2 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapter1Method2.getInstance().setListener(new ExtensionSdkDemoCallback1());
+            }
+        });
+    }
+
     public void adapterJavaHello(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         Log.i(TAG, "adapterJavaHello");
         asyncThreadExec(() -> {
             result.success(Boolean.valueOf(true));
 //            ExtensionSdkDemoCallback1.getInstance().callbackJavaHello();//TODO:
-            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeHello();
+            if (1 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeHello();
+            } else if (2 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapter1Method2.getInstance().adapterHello();
+            }
         });
     }
 
@@ -48,7 +63,12 @@ public class ExtensionSdkDemoAdapter1 {
             result.success(Boolean.valueOf(true));
             Object number = call.argument("number");
             Object string = call.argument("string");
-            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessage(1, string.toString()); // todo:
+
+            if (1 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessage(1, string.toString()); // todo:
+            } else if (2 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapter1Method2.getInstance().adapterSendMessage(1, string.toString()); // todo:
+            }
         });
     }
 
@@ -58,7 +78,11 @@ public class ExtensionSdkDemoAdapter1 {
             result.success(Boolean.valueOf(true));
             Object number = call.argument("number");
             Object json = call.argument("json");
-            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessageWithJson(1, json.toString()); // todo:
+            if (1 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessageWithJson(1, json.toString()); // todo:
+            } else if (2 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapter1Method2.getInstance().adapterSendMessageWithJson(1, json.toString());
+            }
         });
     }
 
@@ -68,7 +92,11 @@ public class ExtensionSdkDemoAdapter1 {
             result.success(Boolean.valueOf(true));
             Object number = call.argument("number");
             Object pb = call.argument("pb");
-            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessageWithPB(1, (byte[]) pb); // todo:
+            if (1 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessageWithPB(1, (byte[]) pb); // todo:
+            } else if (2 == ExtensionSdkDemoMethod.method) {
+                ExtensionSdkDemoAdapter1Method2.getInstance().adapterSendMessageWithPB(1, (byte[])pb);
+            }
         });
     }
 
