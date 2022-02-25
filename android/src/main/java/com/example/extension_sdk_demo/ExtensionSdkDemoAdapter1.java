@@ -44,20 +44,32 @@ public class ExtensionSdkDemoAdapter1 {
 
     public void adapterJavaSendMessage(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         Log.i(TAG, "adapterJavaSendMessage");
-        result.success(Boolean.valueOf(true));
-        Object number = call.argument("number");
-        Object string = call.argument("string");
-        ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessage(1, string.toString()); // todo:
+        asyncThreadExec(() -> {
+            result.success(Boolean.valueOf(true));
+            Object number = call.argument("number");
+            Object string = call.argument("string");
+            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessage(1, string.toString()); // todo:
+        });
     }
 
     public void adapterJavaSendMessageWithJson(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         Log.i(TAG, "adapterJavaSendMessageWithJson");
-        result.success(Boolean.valueOf(true));
+        asyncThreadExec(() -> {
+            result.success(Boolean.valueOf(true));
+            Object number = call.argument("number");
+            Object json = call.argument("json");
+            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessageWithJson(1, json.toString()); // todo:
+        });
     }
 
     public void adapterJavaSendMessageWithPB(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
         Log.i(TAG, "adapterJavaSendMessageWithPB");
-        result.success(Boolean.valueOf(true));
+        asyncThreadExec(() -> {
+            result.success(Boolean.valueOf(true));
+            Object number = call.argument("number");
+            Object pb = call.argument("pb");
+            ExtensionSdkDemoAdapterJNI1.getInstance().adapterNativeSendMessageWithPB(1, (byte[]) pb); // todo:
+        });
     }
 
     private void asyncThreadExec(Runnable runnable) {

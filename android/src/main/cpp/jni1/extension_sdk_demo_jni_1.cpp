@@ -51,7 +51,7 @@ Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNI1_adapterNativeS
         (JNIEnv *env, jobject, jint number, jstring json) {
     const char *cstrJson = (json ? env->GetStringUTFChars(json, 0) : nullptr);
     std::string cppJson = std::string(cstrJson);
-    extension_sdk_demo_cpp_wrapper::getInstance()->cpp_wrapper_send_message(number, cstrJson);
+    extension_sdk_demo_cpp_wrapper::getInstance()->cpp_wrapper_send_message_with_json(number, cstrJson);
     if (json) env->ReleaseStringUTFChars(json, cstrJson);
     env->DeleteLocalRef(json);
 }

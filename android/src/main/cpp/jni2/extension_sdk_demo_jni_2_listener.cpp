@@ -29,11 +29,11 @@ Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNIListener2_native
     std::string cppString = std::string(cstrString);
     if (json) env->ReleaseStringUTFChars(json, cstrString);
     env->DeleteLocalRef(json);
-    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeSendMessageEcho(number, cppString);
+    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeSendMessageWithJsonEcho(number, cppString);
 }
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_example_extension_1sdk_1demo_ExtensionSdkDemoAdapterJNIListener2_nativeSendMessageWithPBEcho(
         JNIEnv *env, jobject thiz, jint number, jbyteArray bytes) {
-    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeHelloEcho();
+    extension_sdk_demo_jni_2_api::getInstance()->adapterNativeSendMessageWithPBEcho(number, "");
 }

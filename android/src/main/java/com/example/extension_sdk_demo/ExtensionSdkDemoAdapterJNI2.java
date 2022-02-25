@@ -21,13 +21,13 @@ public class ExtensionSdkDemoAdapterJNI2 {
     public void adapterNativeHello() {
         Log.i(TAG, "adapterNativeHello");
         // todo: 调用原生接口
-        listener2.nativeHelloEcho();// 假设已经从原生SDK返回
+        listener2.adapterNativeHelloEcho();// 假设已经从原生SDK返回
     }
 
     public void adapterNativeSendMessage(int number, String string) {
         Log.i(TAG, "adapterNativeSendMessage");
         // todo: 调用原生接口
-        listener2.nativeSendMessageEcho(number, string);
+        listener2.adapterNativeSendMessageEcho(number, string);
     }
 
     public void adapterNativeSendMessageWithJson(int number, String json) {

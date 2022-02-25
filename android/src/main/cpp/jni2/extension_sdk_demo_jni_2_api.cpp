@@ -37,10 +37,10 @@ extension_sdk_demo_jni_2_api::extension_sdk_demo_jni_2_api() {
     jclsGAppApi_adapterNativeHello = env->GetMethodID(jclsAppApi, "adapterNativeHello", "()V");
     jclsGAppApi_adapterNativeSendMessage = env->GetMethodID(jclsAppApi, "adapterNativeSendMessage",
                                                             "(ILjava/lang/String;)V");
-    jclsGAppApi_adapterNativeSendMessageWithJson = env->GetMethodID(jclsAppApi, "adapterNativeSendMessage",
+    jclsGAppApi_adapterNativeSendMessageWithJson = env->GetMethodID(jclsAppApi, "adapterNativeSendMessageWithJson",
                                                                     "(ILjava/lang/String;)V");
-    jclsGAppApi_adapterNativeSendMessageWithPB = env->GetMethodID(jclsAppApi, "adapterNativeSendMessage",
-                                                                  "(ILjava/lang/String;)V");
+    jclsGAppApi_adapterNativeSendMessageWithPB = env->GetMethodID(jclsAppApi, "adapterNativeSendMessageWithPB",
+                                                                  "(I[B)V");
 
 
     jclass jclsListener2 = env->FindClass(
@@ -137,5 +137,6 @@ void extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithJsonEcho(int numb
 }
 
 void extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithPBEcho(int number, std::string bytes) {
-    this->_listener->adapterNativeSendMessageWithPBEcho(number, bytes);
+    const char* s = bytes.c_str();
+    this->_listener->adapterNativeSendMessageWithPBEcho(number, const_cast<char*>(s), bytes.length());
 }
