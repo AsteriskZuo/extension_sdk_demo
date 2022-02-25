@@ -13,5 +13,5 @@
 ![流程对比](../res/react-native_sdk.png)
 
 ## 其他相关信息：
-[react-native调研-1.0.0](http://c1.private.easemob.com/pages/viewpage.action?pageId=19114133)
-[SDK封装优化和改进-0.0.1](http://c1.private.easemob.com/pages/viewpage.action?pageId=19115379)
+[react-native调研-1.0.0](http://c1.private.easemob.com/pages/viewpage.action?pageId=19114133)  
+[SDK封装优化和改进-0.0.1](http://c1.private.easemob.com/pages/viewpage.action?pageId=19115379)  
