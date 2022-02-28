@@ -4,6 +4,7 @@
 
 #include "extension_sdk_demo_jni_2_api.h"
 #include "jni_helper.h"
+#include <iostream>
 
 jclass jclsGAppApi = 0;
 jmethodID jclsGAppApi_getInstance = 0;
@@ -16,7 +17,10 @@ jmethodID jclsGAppApi_adapterNativeSendMessageWithPB = 0;
 jclass jclsGListener2 = 0;
 jmethodID jclsGListener2_constructor = 0;
 
-extension_sdk_demo_jni_2_api::extension_sdk_demo_jni_2_api() {
+extension_sdk_demo_jni_2_api extension_sdk_demo_jni_2_api::instance;
+
+void extension_sdk_demo_jni_2_api::init() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
@@ -30,16 +34,18 @@ extension_sdk_demo_jni_2_api::extension_sdk_demo_jni_2_api() {
     env->DeleteLocalRef(jclsAppApi);
     jclsAppApi = 0;
     jclsGAppApi_getInstance = env->GetStaticMethodID(jclsGAppApi,
-                                                               "getInstance",
-                                               "()Lcom/example/extension_sdk_demo/ExtensionSdkDemoAdapterJNI2;");
+                                                     "getInstance",
+                                                     "()Lcom/example/extension_sdk_demo/ExtensionSdkDemoAdapterJNI2;");
     jclsGAppApi_adapterNativeInit = env->GetMethodID(jclsGAppApi, "adapterNativeInit",
                                                      "(Lcom/example/extension_sdk_demo/ExtensionSdkDemoAdapterJNIListener2;)V");
-    jclsGAppApi_adapterNativeHello = env->GetMethodID(jclsAppApi, "adapterNativeHello", "()V");
-    jclsGAppApi_adapterNativeSendMessage = env->GetMethodID(jclsAppApi, "adapterNativeSendMessage",
+    jclsGAppApi_adapterNativeHello = env->GetMethodID(jclsGAppApi, "adapterNativeHello", "()V");
+    jclsGAppApi_adapterNativeSendMessage = env->GetMethodID(jclsGAppApi, "adapterNativeSendMessage",
                                                             "(ILjava/lang/String;)V");
-    jclsGAppApi_adapterNativeSendMessageWithJson = env->GetMethodID(jclsAppApi, "adapterNativeSendMessageWithJson",
+    jclsGAppApi_adapterNativeSendMessageWithJson = env->GetMethodID(jclsGAppApi,
+                                                                    "adapterNativeSendMessageWithJson",
                                                                     "(ILjava/lang/String;)V");
-    jclsGAppApi_adapterNativeSendMessageWithPB = env->GetMethodID(jclsAppApi, "adapterNativeSendMessageWithPB",
+    jclsGAppApi_adapterNativeSendMessageWithPB = env->GetMethodID(jclsGAppApi,
+                                                                  "adapterNativeSendMessageWithPB",
                                                                   "(I[B)V");
 
 
@@ -54,7 +60,9 @@ extension_sdk_demo_jni_2_api::extension_sdk_demo_jni_2_api() {
 
     jclsGListener2_constructor = env->GetMethodID(jclsGListener2, "<init>", "()V");
 }
-extension_sdk_demo_jni_2_api::~extension_sdk_demo_jni_2_api() {
+
+void extension_sdk_demo_jni_2_api::uninit() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
@@ -73,7 +81,19 @@ extension_sdk_demo_jni_2_api::~extension_sdk_demo_jni_2_api() {
     jclsGListener2_constructor = 0;
 }
 
-void extension_sdk_demo_jni_2_api::adapterNativeInit( std::shared_ptr<ExtensionSdkDemoAdapterJNIListener2> listener2) {
+
+extension_sdk_demo_jni_2_api::extension_sdk_demo_jni_2_api() {
+//    std::cout << __FUNCTION__ << ":" << __LINE__  << std::endl;
+
+}
+
+extension_sdk_demo_jni_2_api::~extension_sdk_demo_jni_2_api() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+}
+
+void extension_sdk_demo_jni_2_api::adapterNativeInit(
+        std::shared_ptr<ExtensionSdkDemoAdapterJNIListener2> listener2) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     // todo: jni部分 创建静态单实例java对象
     this->_listener = listener2;
     JNIEnv *env = 0;
@@ -85,8 +105,8 @@ void extension_sdk_demo_jni_2_api::adapterNativeInit( std::shared_ptr<ExtensionS
     env->CallVoidMethod(api, jclsGAppApi_adapterNativeInit, jclsGListener2_object);
 }
 
-
 void extension_sdk_demo_jni_2_api::adapterNativeHello() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     // todo: jni部分
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
@@ -97,18 +117,20 @@ void extension_sdk_demo_jni_2_api::adapterNativeHello() {
 }
 
 void extension_sdk_demo_jni_2_api::adapterNativeSendMessage(int number, std::string string) {
-// todo: jni部分
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+    // todo: jni部分
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
         return;
     jobject api = env->CallStaticObjectMethod(jclsGAppApi, jclsGAppApi_getInstance);
     jstring str = env->NewStringUTF(string.c_str());
-    env->CallVoidMethod(api, jclsGAppApi_adapterNativeSendMessage, (jint)number, str);
-    env->DeleteGlobalRef(str);
+    env->CallVoidMethod(api, jclsGAppApi_adapterNativeSendMessage, (jint) number, str);
+    env->DeleteLocalRef(str);
 }
 
 void extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithJson(int number, std::string json) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 // todo: jni部分
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
@@ -116,27 +138,35 @@ void extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithJson(int number, 
         return;
     jobject api = env->CallStaticObjectMethod(jclsGAppApi, jclsGAppApi_getInstance);
     jstring str = env->NewStringUTF(json.c_str());
-    env->CallVoidMethod(api, jclsGAppApi_adapterNativeSendMessageWithJson, (jint)number, str);
-    env->DeleteGlobalRef(str);
+    env->CallVoidMethod(api, jclsGAppApi_adapterNativeSendMessageWithJson, (jint) number, str);
+    env->DeleteLocalRef(str);
 }
 
 void extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithPB(int number, std::string bytes) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
 // todo: jni部分
 }
 
 void extension_sdk_demo_jni_2_api::adapterNativeHelloEcho() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     this->_listener->adapterNativeHelloEcho();
 }
 
 void extension_sdk_demo_jni_2_api::adapterNativeSendMessageEcho(int number, std::string string) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     this->_listener->adapterNativeSendMessageEcho(number, string);
 }
 
-void extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithJsonEcho(int number, std::string json) {
+void
+extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithJsonEcho(int number, std::string json) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     this->_listener->adapterNativeSendMessageWithJsonEcho(number, json);
 }
 
-void extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithPBEcho(int number, std::string bytes) {
-    const char* s = bytes.c_str();
-    this->_listener->adapterNativeSendMessageWithPBEcho(number, const_cast<char*>(s), bytes.length());
+void
+extension_sdk_demo_jni_2_api::adapterNativeSendMessageWithPBEcho(int number, std::string bytes) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+    const char *s = bytes.c_str();
+    this->_listener->adapterNativeSendMessageWithPBEcho(number, const_cast<char *>(s),
+                                                        bytes.length());
 }

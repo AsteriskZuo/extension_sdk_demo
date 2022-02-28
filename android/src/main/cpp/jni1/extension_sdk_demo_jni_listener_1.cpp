@@ -4,6 +4,7 @@
 
 #include "extension_sdk_demo_jni_listener_1.h"
 #include <string>
+#include <iostream>
 #include "jni_helper.h"
 
 jclass jclsGAppListener = 0;
@@ -12,8 +13,8 @@ jmethodID jclsGAppListener_adapterNativeSendMessageEcho = 0;
 jmethodID jclsGAppListener_adapterNativeSendMessageWithJsonEcho = 0;
 jmethodID jclsGAppListener_adapterNativeSendMessageWithPBEcho = 0;
 
-ExtensionSdkDemoAdapterJNIListener1::ExtensionSdkDemoAdapterJNIListener1(jobject listener)
-        : _listener(listener) {
+void ExtensionSdkDemoAdapterJNIListener1::init() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
@@ -39,7 +40,8 @@ ExtensionSdkDemoAdapterJNIListener1::ExtensionSdkDemoAdapterJNIListener1(jobject
                                                                            "(I[B)V");
 }
 
-ExtensionSdkDemoAdapterJNIListener1::~ExtensionSdkDemoAdapterJNIListener1() {
+void ExtensionSdkDemoAdapterJNIListener1::uninit() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
@@ -53,7 +55,19 @@ ExtensionSdkDemoAdapterJNIListener1::~ExtensionSdkDemoAdapterJNIListener1() {
     jclsGAppListener_adapterNativeSendMessageWithPBEcho = 0;
 }
 
+ExtensionSdkDemoAdapterJNIListener1::ExtensionSdkDemoAdapterJNIListener1(jobject listener)
+        : _listener(listener) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+
+}
+
+ExtensionSdkDemoAdapterJNIListener1::~ExtensionSdkDemoAdapterJNIListener1() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+
+}
+
 void ExtensionSdkDemoAdapterJNIListener1::adapterNativeHelloEcho() {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
@@ -63,6 +77,7 @@ void ExtensionSdkDemoAdapterJNIListener1::adapterNativeHelloEcho() {
 
 void
 ExtensionSdkDemoAdapterJNIListener1::adapterNativeSendMessageEcho(int number, std::string string) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
@@ -75,12 +90,14 @@ ExtensionSdkDemoAdapterJNIListener1::adapterNativeSendMessageEcho(int number, st
 
 void ExtensionSdkDemoAdapterJNIListener1::adapterNativeSendMessageWithJsonEcho(int number,
                                                                                std::string json) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     JNIEnv *env = 0;
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
         return;
     jstring jjson = env->NewStringUTF(json.c_str());
-    env->CallVoidMethod(_listener, jclsGAppListener_adapterNativeSendMessageWithJsonEcho, (jint) number,
+    env->CallVoidMethod(_listener, jclsGAppListener_adapterNativeSendMessageWithJsonEcho,
+                        (jint) number,
                         jjson);
     env->DeleteLocalRef(jjson);
 }
@@ -88,5 +105,6 @@ void ExtensionSdkDemoAdapterJNIListener1::adapterNativeSendMessageWithJsonEcho(i
 void
 ExtensionSdkDemoAdapterJNIListener1::adapterNativeSendMessageWithPBEcho(int number, char *bytes,
                                                                         int bytes_size) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
     // todo:
 }

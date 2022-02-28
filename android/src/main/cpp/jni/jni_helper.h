@@ -13,6 +13,7 @@ class JniHelper {
 public:
     static JniHelper* getInstance();
     void init(JavaVM* vm);
+    void uninit(JavaVM* vm);
     JNIEnv *attachCurrentThread();
     void detachCurrentThread();
 

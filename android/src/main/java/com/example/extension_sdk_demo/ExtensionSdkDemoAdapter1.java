@@ -25,6 +25,10 @@ public class ExtensionSdkDemoAdapter1 {
         return this.channel;
     }
 
+    public void init(MethodCall call, MethodChannel.Result result) {
+        this.setListener();
+    }
+
     private static class SingleHolder {
         static ExtensionSdkDemoAdapter1 instance = new ExtensionSdkDemoAdapter1();
     }

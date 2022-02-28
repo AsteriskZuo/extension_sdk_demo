@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> implements ExtensionSdkDemoListener {
   String _echoHello = "hello";
   String _echoSendMessage = "send msg success";
   String _echoSendMessageWithJson = "send msg success";
-  // String _echoSendMessageWithPB = "send msg success";
+  String _echoSendMessageWithPB = "send msg success";
 
   _MyAppState() {
     log("_MyAppState");
@@ -146,7 +146,7 @@ class _MyAppState extends State<MyApp> implements ExtensionSdkDemoListener {
                         // TODO:
                       },
                       child: const Text('send message with pb')),
-                  const Text('echo result')
+                  Text(_echoSendMessageWithPB)
                 ],
               ),
             ],

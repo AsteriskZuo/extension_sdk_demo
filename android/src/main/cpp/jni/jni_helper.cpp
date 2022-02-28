@@ -3,10 +3,12 @@
 //
 
 #include "jni_helper.h"
+#include "extension_sdk_demo_jni_listener_1.h"
+#include "extension_sdk_demo_jni_2_api.h"
 #include <pthread.h>
 
-extern JavaVM* gvm;
-static pthread_key_t gkey;
+JavaVM* gvm = NULL;
+static pthread_key_t gkey = 0;
 
 JniHelper* JniHelper::getInstance()
 {
@@ -17,6 +19,12 @@ JniHelper* JniHelper::getInstance()
 void JniHelper::init(JavaVM* vm)
 {
     gvm = vm;
+    ExtensionSdkDemoAdapterJNIListener1::init();
+    extension_sdk_demo_jni_2_api::init();
+}
+void JniHelper::uninit(JavaVM* vm) {
+    ExtensionSdkDemoAdapterJNIListener1::uninit();
+    extension_sdk_demo_jni_2_api::uninit();
 }
 JNIEnv *JniHelper::attachCurrentThread()
 {
@@ -73,4 +81,6 @@ JNIEXPORT void JNI_OnUnload(JavaVM *vm, void *reserved) {
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
         return;
+
+    JniHelper::getInstance()->uninit(vm);
 }

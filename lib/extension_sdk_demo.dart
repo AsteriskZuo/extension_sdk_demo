@@ -8,7 +8,7 @@ class ExtensionSdkDemo {
   static const MethodChannel _channel = MethodChannel('extension_sdk_demo');
   static late ExtensionSdkDemoListener _listener;
 
-  static void init(ExtensionSdkDemoListener listener) {
+  static void init(ExtensionSdkDemoListener listener) async {
     _listener = listener;
     _channel.setMethodCallHandler((call) async => {
           if (call.method == "dart_hello_echo")
@@ -22,11 +22,17 @@ class ExtensionSdkDemo {
           else
             {log('nothing')}
         });
+    await dartInit();
   }
 
   static Future<String?> get platformVersion async {
     final String? version = await _channel.invokeMethod('getPlatformVersion');
     return version;
+  }
+
+  static Future<bool> dartInit() async {
+    final bool result = await _channel.invokeMethod('native_init');
+    return result;
   }
 
   static Future<bool> dartHello() async {
@@ -35,7 +41,10 @@ class ExtensionSdkDemo {
   }
 
   static Future<bool> dartSendMessage(int number, String string) async {
-    final bool result = await _channel.invokeMethod('native_send_message');
+    var map = new Map();
+    map["number"] = 100;
+    map["string"] = "dart Send Message";
+    final bool result = await _channel.invokeMethod('native_send_message', map);
     return result;
   }
 

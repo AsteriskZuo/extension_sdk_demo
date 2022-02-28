@@ -12,6 +12,10 @@ class ExtensionSdkDemoAdapterJNIListener1 {
 public:
     ExtensionSdkDemoAdapterJNIListener1(jobject listener);
     virtual ~ExtensionSdkDemoAdapterJNIListener1();
+
+    static void init();
+    static void uninit();
+
     void adapterNativeHelloEcho();
 
     void adapterNativeSendMessageEcho(int number, std::string string);

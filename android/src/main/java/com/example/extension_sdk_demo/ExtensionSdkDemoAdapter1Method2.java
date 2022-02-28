@@ -16,6 +16,7 @@ public class ExtensionSdkDemoAdapter1Method2 {
     }
 
     public void setListener(ExtensionSdkDemoCallback1 listener) {
+        Log.i(TAG, "setListener");
         this.listener = new ExtensionSdkDemoAdapter1Method2Callback(listener);
     }
 
@@ -51,6 +52,7 @@ public class ExtensionSdkDemoAdapter1Method2 {
 class ExtensionSdkDemoAdapter1Method2Callback {
 
     ExtensionSdkDemoAdapter1Method2Callback(ExtensionSdkDemoCallback1 listener) {
+        Log.i(TAG, "ExtensionSdkDemoAdapter1Method2Callback");
         this.listener = listener;
     }
     public void helloEcho() {

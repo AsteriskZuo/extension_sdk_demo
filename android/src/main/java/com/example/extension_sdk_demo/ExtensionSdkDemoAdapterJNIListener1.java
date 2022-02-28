@@ -5,11 +5,13 @@ import android.util.Log;
 // 通过该接口，监听从C++封装层返回的消息
 public class ExtensionSdkDemoAdapterJNIListener1 {
     ExtensionSdkDemoAdapterJNIListener1(ExtensionSdkDemoCallback1 callback1) {
+        Log.i(TAG, "ExtensionSdkDemoAdapterJNIListener1");
         this.callback1 = callback1;
     }
     public void adapterNativeHelloEcho() {
         Log.i(TAG, "adapterNativeHelloEcho");
-        ExtensionSdkDemoAdapter1.getInstance().getCallback1().callbackJavaHello();
+//        ExtensionSdkDemoAdapter1.getInstance().getCallback1().callbackJavaHello();
+        callback1.callbackJavaHello();
     }
 
     public void adapterNativeSendMessageEcho(int number, String string) {

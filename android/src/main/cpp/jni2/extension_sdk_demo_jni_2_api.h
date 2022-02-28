@@ -19,6 +19,8 @@ public:
         return &instance;
     }
 
+    static void init();
+    static void uninit();
 public:
     extension_sdk_demo_jni_2_api();
     virtual ~extension_sdk_demo_jni_2_api();
