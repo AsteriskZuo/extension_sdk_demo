@@ -43,6 +43,8 @@ public class ExtensionSdkDemoPlugin implements FlutterPlugin, MethodCallHandler 
             ExtensionSdkDemoAdapter1.getInstance().adapterJavaSendMessageWithJson(call, result);
         } else if (call.method.equals("native_send_message_with_pb")) {
             ExtensionSdkDemoAdapter1.getInstance().adapterJavaSendMessageWithPB(call, result);
+        } else if (call.method.equals("native_callback")) {
+            ExtensionSdkDemoAdapter1.getInstance().adapterJavaCallback(call, result);
         } else {
             result.notImplemented();
         }

@@ -104,6 +104,13 @@ public class ExtensionSdkDemoAdapter1 {
         });
     }
 
+    public void adapterJavaCallback(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+        Log.i(TAG, "adapterJavaCallback");
+        asyncThreadExec(() -> {
+
+        });
+    }
+
     private void asyncThreadExec(Runnable runnable) {
 //        asyncThreadPool.submit(runnable);
         asyncThreadPool.execute(runnable);
