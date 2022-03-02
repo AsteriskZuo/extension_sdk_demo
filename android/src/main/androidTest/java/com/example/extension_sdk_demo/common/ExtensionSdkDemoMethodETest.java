@@ -7,8 +7,6 @@ import android.util.Log;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
-import com.example.extension_sdk_demo.commcon.ExtensionSdkDemoMethodE;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -21,7 +19,7 @@ public class ExtensionSdkDemoMethodETest {
     }
     @Test
     public void test_for() {
-        ExtensionSdkDemoMethodE obj = ExtensionSdkDemoMethodE.METHOD_HELLO;
+        ExtensionSdkDemoMethodTypeE obj = ExtensionSdkDemoMethodTypeE.METHOD_HELLO;
         String method = obj.getMethod();
         String name = obj.name();
         Log.i(TAG, method + ":" + name);

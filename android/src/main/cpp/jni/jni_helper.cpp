@@ -5,6 +5,7 @@
 #include "jni_helper.h"
 #include "extension_sdk_demo_jni_listener_1.h"
 #include "extension_sdk_demo_jni_2_api.h"
+#include "ExtensionSdkDemoSdkApiJava.h"
 #include <pthread.h>
 
 JavaVM* gvm = NULL;
@@ -21,10 +22,14 @@ void JniHelper::init(JavaVM* vm)
     gvm = vm;
     ExtensionSdkDemoAdapterJNIListener1::init();
     extension_sdk_demo_jni_2_api::init();
+    E_SDK_NAMESPACE_USING
+    ExtensionSdkDemoSdkApiJava::init();
 }
 void JniHelper::uninit(JavaVM* vm) {
     ExtensionSdkDemoAdapterJNIListener1::uninit();
     extension_sdk_demo_jni_2_api::uninit();
+    E_SDK_NAMESPACE_USING
+    ExtensionSdkDemoSdkApiJava::unInit();
 }
 JNIEnv *JniHelper::attachCurrentThread()
 {

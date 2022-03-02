@@ -6,12 +6,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.extension_sdk_demo.common.ExtensionSdkDemoConfig;
+import com.example.extension_sdk_demo.common.ExtensionSdkDemoParamsTypeE;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Function;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -27,6 +28,12 @@ public class ExtensionSdkDemoAdapter1 {
 
     public void init(MethodCall call, MethodChannel.Result result) {
         this.setListener();
+        this.setConfiguration(call, result);
+    }
+
+    private void setConfiguration(MethodCall call, MethodChannel.Result result) {
+        // todo: 正常需要使用上层提供的配置，但是这个是demo
+        ExtensionSdkDemoConfig.currentParamsTypeE = ExtensionSdkDemoParamsTypeE.PARAMS_JSON;
     }
 
     private static class SingleHolder {

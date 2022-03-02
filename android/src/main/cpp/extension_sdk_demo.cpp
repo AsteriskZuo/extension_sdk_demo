@@ -1,3 +1,6 @@
+#include <jni.h>
+#include "ExtensionSdkDemoMethodTypeE.h"
+
 // Write C++ code here.
 //
 // Do not forget to dynamically load the C++ library into your application.
