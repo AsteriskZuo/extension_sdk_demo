@@ -7,6 +7,7 @@
 
 #include "ExtensionSdkDemoObjectJava.h"
 #include <memory>
+#include <jni.h>
 
 E_SDK_NAMESPACE_BEGIN
 

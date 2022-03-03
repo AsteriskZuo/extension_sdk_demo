@@ -12,7 +12,11 @@ E_SDK_NAMESPACE_BEGIN
 class ExtensionSdkDemoSdkApiJava : public ExtensionSdkDemoSdkApi {
 public:
     static void init();
+
     static void unInit();
+
+    virtual void setListener(std::shared_ptr<ExtensionSdkDemoObject> listener) override;
+
     virtual void
     sdkApi(const std::string &methodType, const std::shared_ptr<ExtensionSdkDemoObject> params,
            const std::shared_ptr<ExtensionSdkDemoObject> &callback) override;

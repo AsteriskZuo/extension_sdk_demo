@@ -11,6 +11,10 @@ E_SDK_NAMESPACE_BEGIN
 
 ExtensionSdkDemoApiCpp ExtensionSdkDemoApiCpp::_instance;
 
+void ExtensionSdkDemoApiCpp::setListener(const std::shared_ptr<ExtensionSdkDemoObject> listener) {
+    ExtensionSdkDemoSdkApi_getInstance()->setListener(listener);
+}
+
 void ExtensionSdkDemoApiCpp::init(const std::shared_ptr<ExtensionSdkDemoObject> configures) {
     std::shared_ptr<ExtensionSdkDemoObjectCpp> c = std::dynamic_pointer_cast<ExtensionSdkDemoObjectCpp>(
             configures);

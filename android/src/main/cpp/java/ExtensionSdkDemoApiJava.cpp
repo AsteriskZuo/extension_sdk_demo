@@ -8,6 +8,7 @@
 #include "ExtensionSdkDemoObjectCpp.h"
 #include <jni.h>
 #include <iostream>
+#include <jni.h>
 
 extern "C"
 JNIEXPORT void JNICALL
@@ -37,6 +38,20 @@ Java_com_example_extension_1sdk_1demo_jni_ExtensionSdkDemoApiJni_callJniApi(JNIE
     cpp_callback->obj = callback;
     const char *c_method_type = env->GetStringUTFChars(method_type, 0);
     ExtensionSdkDemoApiJava::getInstance()->javaApi(c_method_type, cpp_params, cpp_callback);
+}
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_extension_1sdk_1demo_jni_ExtensionSdkDemoApiJni_setListener(JNIEnv *env,
+                                                                             jclass clazz,
+                                                                             jobject listener) {
+// TODO: implement setListener()
+    jobject g_listener = env->NewGlobalRef(listener);
+    E_SDK_NAMESPACE_USING
+    std::shared_ptr<ExtensionSdkDemoObjectJava> java_listener = std::make_shared<ExtensionSdkDemoObjectJava>();
+    java_listener->obj = g_listener;
+    ExtensionSdkDemoApiCpp::getInstance()->setListener(java_listener);
 }
 
 E_SDK_NAMESPACE_BEGIN

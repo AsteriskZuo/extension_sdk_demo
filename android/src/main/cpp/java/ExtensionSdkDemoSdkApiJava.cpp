@@ -14,6 +14,7 @@ E_SDK_NAMESPACE_BEGIN
 jclass jclsGSdkApi = 0;
 jmethodID jclsGSdkApi_getInstance = 0;
 jmethodID jclsGSdkApi_sdkApi = 0;
+jmethodID jclsGSdkApi_setListener = 0;
 
 void ExtensionSdkDemoSdkApiJava::init() {
     std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
@@ -34,6 +35,8 @@ void ExtensionSdkDemoSdkApiJava::init() {
                                                      "()Lcom/example/extension_sdk_demo/sdk/ExtensionSdkDemoSdkApi;");
     jclsGSdkApi_sdkApi = env->GetMethodID(jclsGSdkApi, "sdkApi",
                                           "(Ljava/lang/String;Ljava/lang/Object;Lcom/example/extension_sdk_demo/common/ExtensionSdkDemoCallback;)V");
+    jclsGSdkApi_setListener = env->GetMethodID(jclsGSdkApi, "setListener",
+                                               "(Lcom/example/extension_sdk_demo/flutter/ExtensionSdkDemoMessageListenerFlutter;)V");
 }
 
 void ExtensionSdkDemoSdkApiJava::unInit() {
@@ -46,6 +49,19 @@ void ExtensionSdkDemoSdkApiJava::unInit() {
         env->DeleteGlobalRef(jclsGSdkApi);
     jclsGSdkApi_getInstance = 0;
     jclsGSdkApi_sdkApi = 0;
+    jclsGSdkApi_setListener = 0;
+}
+
+void ExtensionSdkDemoSdkApiJava::setListener(std::shared_ptr<ExtensionSdkDemoObject> listener) {
+    std::cout << __FUNCTION__ << ":" << __LINE__ << std::endl;
+    JNIEnv *env = 0;
+    env = JniHelper::getInstance()->attachCurrentThread();
+    if (!env)
+        return;
+    std::shared_ptr<ExtensionSdkDemoObjectJava> java_listener = std::dynamic_pointer_cast<ExtensionSdkDemoObjectJava>(
+            listener);
+    jobject sdkApi = env->CallStaticObjectMethod(jclsGSdkApi, jclsGSdkApi_getInstance);
+    env->CallVoidMethod(sdkApi, jclsGSdkApi_setListener, java_listener->obj);
 }
 
 void ExtensionSdkDemoSdkApiJava::sdkApi(const std::string &methodType,
@@ -57,11 +73,14 @@ void ExtensionSdkDemoSdkApiJava::sdkApi(const std::string &methodType,
     env = JniHelper::getInstance()->attachCurrentThread();
     if (!env)
         return;
-    std::shared_ptr<ExtensionSdkDemoObjectJava> cpp_params = std::dynamic_pointer_cast<ExtensionSdkDemoObjectJava>(params);
-    std::shared_ptr<ExtensionSdkDemoObjectJava> cpp_callback = std::dynamic_pointer_cast<ExtensionSdkDemoObjectJava>(callback);
+    std::shared_ptr<ExtensionSdkDemoObjectJava> cpp_params = std::dynamic_pointer_cast<ExtensionSdkDemoObjectJava>(
+            params);
+    std::shared_ptr<ExtensionSdkDemoObjectJava> cpp_callback = std::dynamic_pointer_cast<ExtensionSdkDemoObjectJava>(
+            callback);
     jstring java_method_type = env->NewStringUTF(methodType.c_str());
     jobject sdkApi = env->CallStaticObjectMethod(jclsGSdkApi, jclsGSdkApi_getInstance);
-    env->CallVoidMethod(sdkApi, jclsGSdkApi_sdkApi, java_method_type, cpp_params->obj, cpp_callback->obj);
+    env->CallVoidMethod(sdkApi, jclsGSdkApi_sdkApi, java_method_type, cpp_params->obj,
+                        cpp_callback->obj);
     env->DeleteLocalRef(java_method_type);
 }
 

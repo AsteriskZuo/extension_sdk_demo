@@ -19,6 +19,8 @@ public:
 
     void init(const std::shared_ptr<ExtensionSdkDemoObject> configures);
 
+    void setListener(const std::shared_ptr<ExtensionSdkDemoObject> listener);
+
     void
     callSdkApi(const std::string &methodType, const std::shared_ptr<ExtensionSdkDemoObject> params,
                const std::shared_ptr<ExtensionSdkDemoObject> &callback);

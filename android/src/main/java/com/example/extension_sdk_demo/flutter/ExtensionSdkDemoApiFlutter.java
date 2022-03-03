@@ -21,6 +21,7 @@ public class ExtensionSdkDemoApiFlutter implements ExtensionSdkDemoApi {
     public void init(@NonNull Object config) {
         Log.i(TAG, "init");
         ExtensionSdkDemoApiJni.init(config);
+        this.addListener(new ExtensionSdkDemoMessageListenerFlutter());
     }
 
     @Override
@@ -31,6 +32,7 @@ public class ExtensionSdkDemoApiFlutter implements ExtensionSdkDemoApi {
     @Override
     public void addListener(@NonNull ExtensionSdkDemoBaseListener listener) {
         Log.i(TAG, listener.getClass().getName());
+        ExtensionSdkDemoApiJni.setListener(listener);
     }
 
     @Override
