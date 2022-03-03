@@ -1,0 +1,8 @@
+//
+// Created by asterisk on 2022/3/3.
+//
+
+#ifndef ANDROID_EXTSDKCHATROOM_H
+#define ANDROID_EXTSDKCHATROOM_H
+
+#endif //ANDROID_EXTSDKCHATROOM_H

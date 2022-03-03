@@ -1,0 +1,8 @@
+//
+// Created by asterisk on 2022/3/3.
+//
+
+#ifndef ANDROID_EXTSDKUSERINFO_H
+#define ANDROID_EXTSDKUSERINFO_H
+
+#endif //ANDROID_EXTSDKUSERINFO_H

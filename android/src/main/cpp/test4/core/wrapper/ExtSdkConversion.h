@@ -1,0 +1,8 @@
+//
+// Created by asterisk on 2022/3/3.
+//
+
+#ifndef ANDROID_EXTSDKCONVERSION_H
+#define ANDROID_EXTSDKCONVERSION_H
+
+#endif //ANDROID_EXTSDKCONVERSION_H

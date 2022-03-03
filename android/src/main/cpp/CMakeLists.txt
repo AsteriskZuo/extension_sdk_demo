@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.10.2)
 
 project("extension_sdk_demo")
 
-add_definitions(-DJAVA_LANGUAGE -DFLUTTER_PLATFORM)
+add_definitions(-DJAVA_LANGUAGE -DFLUTTER_PLATFORM -DANDROID_PLATFORM -DFLUTTER_ARCHITECTURE)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
     add_definitions(-DDEBUG)
@@ -99,6 +99,23 @@ set(CPP_HEADER_FILES
         cpp/ExtensionSdkDemoObjectCpp.h
         )
 
+# 在某些时候检测不到新添加的C++文件，需要手动删除.cxx文件夹(Project Files浏览模式)
+#file(GLOB TEST4_SOURCES_COMMON_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test4/common/*.cpp)
+#file(GLOB TEST4_SOURCES_CPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test4/cpp/*.cpp)
+#file(GLOB TEST4_SOURCES_JAVA_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test4/java/*.cpp)
+#file(GLOB TEST4_SOURCES_ANDROID_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test4/android/*.cpp)
+#file(GLOB TEST4_SOURCES_CORE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test4/core/*.cpp)
+#file(GLOB TEST4_SOURCES_CORE_WRAPPER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test4/core/wrapper/*.cpp)
+
+# 采用自动搜索源码文件方式 这种方式也有问题，需要修改该文件之后才能让系统感觉到有文件变化
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/test4/common TEST4_SOURCES_COMMON_FILES)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/test4/cpp TEST4_SOURCES_CPP_FILES)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/test4/java TEST4_SOURCES_JAVA_FILES)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/test4/android TEST4_SOURCES_ANDROID_FILES)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/test4/core TEST4_SOURCES_CORE_FILES)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/test4/core/wrapper TEST4_SOURCES_CORE_WRAPPER_FILES)
+
+
 #add_library(
 #        jni_helper
 #        jni/jni_helper.cpp
@@ -128,6 +145,12 @@ add_library( # Sets the name of the library.
         ${COMMON_SOURCE_FILES}
         ${JAVA_SOURCE_FILES}
         ${CPP_SOURCE_FILES}
+        ${TEST4_SOURCES_COMMON_FILES}
+        ${TEST4_SOURCES_CPP_FILES}
+        ${TEST4_SOURCES_JAVA_FILES}
+        ${TEST4_SOURCES_ANDROID_FILES}
+        ${TEST4_SOURCES_CORE_FILES}
+        ${TEST4_SOURCES_CORE_WRAPPER_FILES}
         )
 #target_include_directories(
 #        extension_sdk_demo
@@ -144,6 +167,12 @@ target_include_directories(extension_sdk_demo
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/common
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/java
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/cpp
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test4/common
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test4/cpp
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test4/java
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test4/android
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test4/core
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test4/core/wrapper
         )
 
 # Specifies libraries CMake should link to your target library. You

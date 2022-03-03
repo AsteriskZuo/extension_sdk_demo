@@ -6,9 +6,10 @@
 #include "extension_sdk_demo_jni_listener_1.h"
 #include "extension_sdk_demo_jni_2_api.h"
 #include "ExtensionSdkDemoSdkApiJava.h"
+#include "ExtSdkJniHelper.h"
 #include <pthread.h>
 
-JavaVM* gvm = NULL;
+static JavaVM* gvm = NULL;
 static pthread_key_t gkey = 0;
 
 JniHelper* JniHelper::getInstance()
@@ -24,12 +25,14 @@ void JniHelper::init(JavaVM* vm)
     extension_sdk_demo_jni_2_api::init();
     E_SDK_NAMESPACE_USING
     ExtensionSdkDemoSdkApiJava::init();
+    ExtSdkJniHelper::getInstance()->init(vm);
 }
 void JniHelper::uninit(JavaVM* vm) {
     ExtensionSdkDemoAdapterJNIListener1::uninit();
     extension_sdk_demo_jni_2_api::uninit();
     E_SDK_NAMESPACE_USING
     ExtensionSdkDemoSdkApiJava::unInit();
+    ExtSdkJniHelper::getInstance()->unInit(vm);
 }
 JNIEnv *JniHelper::attachCurrentThread()
 {
