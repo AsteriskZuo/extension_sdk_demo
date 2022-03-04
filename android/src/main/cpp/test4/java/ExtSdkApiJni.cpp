@@ -6,6 +6,7 @@
 #include "ExtSdkObjectJava.h"
 #include "ExtSdkListenerJava.h"
 #include "ExtSdkApi.h"
+#include "ExtSdkJniHelper.h"
 #include <jni.h>
 
 extern "C"
@@ -78,7 +79,20 @@ ExtSdkApiJni::callSdkApi(const std::string &methodType, const std::shared_ptr<Ex
                          const std::shared_ptr<ExtSdkObject> callback) {
     // todo: 准备调用原生sdk，之后还需要在做一次分发
     // todo: 利用反射创建java对象`ExtSdkApiJniR`，java对象接收调用之后，进行分发，调用原生SDK
+    JNIEnv *env = 0;
+    env = ExtSdkJniHelper::getInstance()->attachCurrentThread();
+    if (!env)
+        return;
+    std::shared_ptr<ExtSdkObjectJava> java_params = std::dynamic_pointer_cast<ExtSdkObjectJava>(params);
+    std::shared_ptr<ExtSdkObjectJava> java_callback = std::dynamic_pointer_cast<ExtSdkObjectJava>(callback);
+    jstring java_method_type = env->NewStringUTF(methodType.c_str());
 
+    jclass jcls = env->FindClass("com/example/extension_sdk_demo/test4/jni/ExtSdkApiJniR");
+    jmethodID jmid_constructor = env->GetMethodID(jcls, "<init>", "()V");
+    jmethodID jmid_callSdkApi = env->GetMethodID(jcls, "callSdkApi",
+                                                 "(Ljava/lang/String;Ljava/lang/Object;Lcom/example/extension_sdk_demo/test4/jni/ExtSdkCallbackJniR;)V");
+    jobject jobj = env->NewObject(jcls, jmid_constructor);
+    env->CallVoidMethod(jobj, jmid_callSdkApi, java_method_type, java_params->obj, java_callback->obj);
 }
 
 void ExtSdkApiJni::unInit() {

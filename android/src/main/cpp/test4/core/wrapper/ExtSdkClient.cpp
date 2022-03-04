@@ -51,10 +51,18 @@ void ExtSdkClient::login(const std::string token, const std::function<void(int c
     obj = jobj_map;
 
     jobject obj2; // todo: 实际需要创建的回调对象， 该回调对象持有result，回来的时候调用result
-    jclass jcls_callback = env->FindClass("com/example/extension_sdk_demo/test4/jni/ExtSdkCallbackJniR");
-    jmethodID jmid_cb_success = env->GetMethodID(jcls_callback, "success", "(Ljava/lang/Object;)V");
-    jmethodID jmid_cb_fail = env->GetMethodID(jcls_callback, "fail", "(ILjava/lang/Object;)V");
+    jclass jcls_cb = env->FindClass("com/example/extension_sdk_demo/test4/jni/ExtSdkCallbackJniR");
+    jmethodID jmid_cb_constructor = env->GetMethodID(jcls_cb, "<init>", "()V");
+    jmethodID jmid_cb_setNative = env->GetMethodID(jcls_cb, "setNativeObj", "(J)V");
+    jmethodID jmid_cb_setMethodType = env->GetMethodID(jcls_cb, "setMethodType", "(Ljava/lang/String;)V");
+    jstring jstr_method_type = env->NewStringUTF(ExtSdkMethodType::METHOD_LOGIN);
 
+    std::function<void(int, std::string)>* p_result = new std::function<void(int, std::string)>(result);
+    jobject jobj_cb = env->NewObject(jcls_cb, jmid_cb_constructor);
+    env->CallVoidMethod(jobj_cb, jmid_cb_setNative, (jlong)p_result);
+    env->CallVoidMethod(jobj_cb, jmid_cb_setMethodType, jstr_method_type);
+    env->DeleteLocalRef(jstr_method_type);
+    obj2 = jobj_cb;
 
     std::shared_ptr<ExtSdkObjectJava> java_params = std::make_shared<ExtSdkObjectJava>(obj);
     std::shared_ptr<ExtSdkObjectJava> java_callback = std::make_shared<ExtSdkObjectJava>(obj2);

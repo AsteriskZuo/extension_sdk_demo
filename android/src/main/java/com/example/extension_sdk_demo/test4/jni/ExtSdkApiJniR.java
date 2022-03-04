@@ -27,7 +27,7 @@ public class ExtSdkApiJniR {
     public void delListener(ExtSdkBaseListener listener) {
 
     }
-    public void callSdkApi(@NonNull String methodType, @Nullable Object params, @Nullable ExtSdkCallback callback) {
+    public void callSdkApi(@NonNull String methodType, @Nullable Object params, @Nullable ExtSdkCallbackJniR callback) {
         // todo: work_count: 1 -> 100+
         // todo: java map params translate to java object
         // TODO: 由此进行分发调用原生sdk
@@ -36,7 +36,12 @@ public class ExtSdkApiJniR {
         } else if (methodType.equals(ExtSdkMethodType.METHOD_ADD_LISTENER)) {
 
         } else if (methodType.equals(ExtSdkMethodType.METHOD_LOGIN)) {
-
+            // todo: 模拟回调情况
+            if (true) {
+                callback.success("ok");
+            } else {
+                callback.fail(1, "error");
+            }
         } else if (methodType.equals(ExtSdkMethodType.METHOD_LOGOUT)) {
 
         } else if (methodType.equals(ExtSdkMethodType.METHOD_HELLO)) {
