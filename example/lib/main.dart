@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> implements ExtensionSdkDemoListener {
   String _echoSendMessage = "send msg success";
   String _echoSendMessageWithJson = "send msg success";
   String _echoSendMessageWithPB = "send msg success";
+  int _loginResult = 0;
 
   _MyAppState() {
     log("_MyAppState");
@@ -147,6 +148,21 @@ class _MyAppState extends State<MyApp> implements ExtensionSdkDemoListener {
                       },
                       child: const Text('send message with pb')),
                   Text(_echoSendMessageWithPB)
+                ],
+              ),
+              Row(
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        ExtensionSdkDemo.dartLogin("token")
+                            .then((value) => setState(
+                                  () {
+                                    ++_loginResult;
+                                  },
+                                ));
+                      },
+                      child: const Text('login')),
+                  Text(_loginResult.toString())
                 ],
               ),
             ],

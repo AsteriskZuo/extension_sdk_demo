@@ -60,6 +60,13 @@ class ExtensionSdkDemo {
         await _channel.invokeMethod('native_send_message_with_pb');
     return result;
   }
+
+  static Future<bool> dartLogin(String token) async {
+    var map = {};
+    map["token"] = token;
+    final bool result = await _channel.invokeMethod('native_login', map);
+    return result;
+  }
 }
 
 abstract class ExtensionSdkDemoListener {
